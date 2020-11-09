@@ -1,22 +1,31 @@
-<div *ngIf="current$ | async as current">
-  <div fxLayout="row">
-    <div fxFlex="66%" class="mat-title no-margin">{{ current.city }},
-      {{ current.country }}</div>
-    <div fxFlex class="mat-subheading-2 no-margin">
-      {{ current.date | date: 'EEEE MMM d' }}{{ getOrdinal(current.date) }}
-    </div>
-  </div>
-  <div fxLayout="row" fxLayoutAlign="center center" style="margin-bottom: -48px;">
-    <div fxFlex="55%">
-      <img style="zoom: 175%; margin-bottom: 32px;" [src]="current.image"
-        [alt]="current.description" />
-    </div>
-    <div fxFlex class="right no-margin">
-      <p class="mat-display-3">
-        {{ current.temperature | number: '1.0-0' }}
-        <span class="mat-display-1 unit">&#8457;</span>
-      </p>
-    </div>
-  </div>
-  <div fxLayoutAlign="center " class="mat-caption ">{{ current.description }}</div>
+<!-- Null guarding: Strategy 3: ngIf -->
+<div *ngIf="!current">
+  no data
 </div>
+<div *ngIf="current">
+  <div>
+    <span>{{current.city}}, {{current.country}}</span>
+    <span>{{current.date | date:'fullDate'}}</span>
+  </div>
+  <div>
+    <img [src]='current.image'>
+    <span>{{current.temperature | number:'1.0-0'}}℉</span>
+  </div>
+  <div>
+    {{current.description}}
+  </div>
+</div>
+
+<!-- Null guarding: Strategy 2, Safe navigation operator
+<div>
+  <span>{{current?.city}}, {{current?.country}}</span>
+  <span>{{current?.date | date:'fullDate'}}</span>
+</div>
+<div>
+  <img [src]='current?.image'>
+  <span>{{current?.temperature | number:'1.0-0'}}℉</span>
+</div>
+<div>
+  {{current?.description}}
+</div>
+-->
